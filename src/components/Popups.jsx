@@ -1,5 +1,7 @@
 import { Circle, FeatureGroup, LayerGroup, MapContainer, Popup, Rectangle, TileLayer } from 'react-leaflet'
 import "leaflet/dist/leaflet.css";
+import EstilosPopput from './EstilosPopput';
+import EstilosPopput2 from './EstilosPopput2';
 
 
 const Popups = () => {
@@ -37,13 +39,13 @@ const Popups = () => {
             </LayerGroup>
             <FeatureGroup pathOptions={purpleOptions}>
                 <Popup>
-                    Hola Mundo
+                    <EstilosPopput />
                 </Popup>
                 <Circle center={[51.51, -0.06]} radius={200} />
             </FeatureGroup>
             <FeatureGroup pathOptions={purpleOptions}>
                 <Popup>
-                    Hola Mundo 2
+                    <EstilosPopput2 />
                 </Popup>
                 <Rectangle bounds={rectangle} />
             </FeatureGroup>
