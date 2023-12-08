@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Popup, Marker, GeoJSON, FeatureGroup } from 'react-leaflet';
 import "leaflet/dist/leaflet.css";
 import '@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css';
@@ -9,7 +9,33 @@ const TurfUnion = () => {
     const [isUnionActive, setIsUnionActive] = useState(false);
     const [unionResult, setUnionResult] = useState(null);
 
-   
+    const [areas, setAreas] = useState([]);
+    const geoJSON = {
+        type: "FeatureCollection",
+        features: []
+    };
+
+    const extraerGeo = (datos) => {
+        // console.log(datos.geometry.coordinates);
+        setAreas(datos.geometry.coordinates);
+
+        // Agregar las coordenadas a la colección de GeoJSON
+        geoJSON.features.push({
+            type: "Feature",
+            geometry: {
+                type: "Polygon",
+                coordinates: datos.geometry.coordinates
+            },
+            properties: {
+                // Puedes agregar propiedades adicionales aquí si es necesario
+            }
+        });
+
+        // console.log(geoJSON);
+        console.log(JSON.stringify(geoJSON, null, 2));
+    };
+
+
 
     // const handleUnion = () => {
     //     const result = turf.union(poly1, poly2);
@@ -21,12 +47,12 @@ const TurfUnion = () => {
         setIsUnionActive(false);
     };
 
-    const handleActivateUnion = () => {
-        if (!isUnionActive) {
-            // handleUnion();
-            setIsUnionActive(true);
-        }
-    };
+    // const handleActivateUnion = () => {
+    //     if (!isUnionActive) {
+    //         // handleUnion();
+    //         setIsUnionActive(true);
+    //     }
+    // };
 
     return (
         <div>
@@ -55,8 +81,10 @@ const TurfUnion = () => {
                             continueDrawing: true,
                             editable: false,
                         }}
-                        onCreate={handleActivateUnion}
-                        onChange={(e) => console.log('onChange', e)}
+                        onCreate={(e) => {
+                            extraerGeo(e.layer.toGeoJSON());
+                        }}
+                    // onChange={(e) => console.log('onChange', e)}
                     />
                 </FeatureGroup>
 
