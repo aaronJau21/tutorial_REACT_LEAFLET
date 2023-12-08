@@ -1,8 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
-import MostrarMap from "./components/MostrarMap";
-import LayersControl from "./components/LayersControl2";
-import Vectores from "./components/Vectores";
-import Popups from "./components/Popups";
+import MostrarMap from "./components/maps/MostrarMap";
+import LayersControl from "./components/maps/LayersControl2";
+import Vectores from "./components/maps/Vectores";
+import Popups from "./components/maps/Popups";
+import TurfUnion from "./components/turf/TurfUnion";
 
 
 
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
   {
     path: '/popups',
     element: <Popups />
+  },
+  {
+    path: '/turf-union',
+    element: <TurfUnion />
   }
 ])
 
