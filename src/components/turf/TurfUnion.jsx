@@ -4,6 +4,8 @@ import "leaflet/dist/leaflet.css";
 import '@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css';
 import { GeomanControls } from 'react-leaflet-geoman-v2';
 import * as turf from '@turf/turf';
+import { http } from '../services/api';
+import { data } from 'autoprefixer';
 
 const TurfUnion = () => {
     const [isUnionActive, setIsUnionActive] = useState(false);
@@ -13,6 +15,15 @@ const TurfUnion = () => {
         type: "FeatureCollection",
         features: []
     };
+
+    const createPoligon = async()=> {
+        try {
+            const response = await http.post("/guardarGeoJSON", geoJSON)
+            return response.data;
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     const extraerGeo = (datos) => {
         // console.log(datos.geometry.coordinates);
@@ -51,10 +62,11 @@ const TurfUnion = () => {
     //         setIsUnionActive(true);
     //     }
     // };
-
+    
     return (
         <div>
-            <MapContainer center={[35.6, -82.55]} zoom={13} scrollWheelZoom={true} style={{ width: '100%', height: '100vh' }}>
+            <button onClick={()=> createPoligon()}>guardar</button>
+            <MapContainer center={[-12.085233, -77.034245]} zoom={13} scrollWheelZoom={true} style={{ width: '100%', height: '100vh' }}>
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -85,7 +97,6 @@ const TurfUnion = () => {
                     // onChange={(e) => console.log('onChange', e)}
                     />
                 </FeatureGroup>
-
                 {/* Botón para desactivar la unión */}
                 {/* <button onClick={handleDeactivateUnion}>Desactivar Unión</button> */}
             </MapContainer>
