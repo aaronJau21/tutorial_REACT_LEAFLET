@@ -9,7 +9,6 @@ const TurfUnion = () => {
     const [isUnionActive, setIsUnionActive] = useState(false);
     const [unionResult, setUnionResult] = useState(null);
 
-    const [areas, setAreas] = useState([]);
     const geoJSON = {
         type: "FeatureCollection",
         features: []
@@ -17,7 +16,6 @@ const TurfUnion = () => {
 
     const extraerGeo = (datos) => {
         // console.log(datos.geometry.coordinates);
-        setAreas(datos.geometry.coordinates);
 
         // Agregar las coordenadas a la colección de GeoJSON
         geoJSON.features.push({
